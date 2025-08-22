@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>JokeGenie</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>JokeGenie 🤣</h1>
+      <h2>Choose your settings and hit the laugh button!</h2>
+      <form action="/joke" id="form" class="form" method="POST">
+        <select name="type" class="form-select">
+          <option value="" data-display="Select">Random type</option>
+          <option value="twopart">twopart</option>
+          <option value="single">single</option>
+        </select>
+        <select name="lang" class="form-select">
+          <option value="">Language</option>
+          <option value="cs">cs - Czech</option>
+          <option value="de">de - German</option>
+          <option value="en">en - English</option>
+          <option value="es">es - Spanish</option>
+          <option value="fr">fr - French</option>
+          <option value="pt">pt - Portuguese</option>
+        </select>
+
+        <input
+          type="text"
+          id="numJokes"
+          name="numJokes"
+          placeholder="How many?"
+        />
+        <div class="submit-container">
+          <button type="submit" class="form-submit">😂</button>
+        </div>
+      </form>
+      <section id="cards" class="cards">
+        <%if (locals.data) {%> 
+        <% for (let i = 0; i < data.jokes.length; i++) {%>
+        <article class="card-item">
+            <% if (data.jokes[i].type == "twopart") {%>
+                <h3 class="card-activity"><%=data.jokes[i].setup%></h3>
+                <hr style="margin: 10px 0;">
+                <h3 class="card-activity"><%=data.jokes[i].delivery%></h3>
+           <% } else { %>
+                <h3 class="card-activity"><%=data.jokes[i].joke%></h3>
+           <%}%>
+        </article>
+
+        <%} %> 
+        <%}%> <%if (locals.error) {%>
+        <div id="tag-error" class="tag-error"><%=error%></div>
+        <%}%>
+      </section>
+    </div>
+  </body>
+</html>
